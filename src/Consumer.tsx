@@ -85,7 +85,7 @@ function Consumer() {
             <li className='inventory' key={idx}>
               {`${key}: ${inv[key]}`}
               <button onClick={() => restock(key)}>Restock</button>
-            </li>
+            </li>in
           )
         })}
       </div>
