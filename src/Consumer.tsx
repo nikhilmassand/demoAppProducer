@@ -11,7 +11,7 @@ interface Inventory {
 const inventory: Inventory = {
   X01: 3000,
   X02: 1700,
-  X03: 200, 
+  X03: 200,
   X04: 9000,
   X05: 2400,
 }
@@ -49,9 +49,9 @@ function Consumer() {
   //     const latest = JSON.parse(sku[sku.length - 1]);
   //     console.log('sku latest: ', latest);
   //     // const newInv = inv[latest.SKU] - latest.qty;
-  
+
   //     newInv[latest.SKU] -= latest.qty;
-  
+
   //     // const skuUpdate = latest.SKU;
   //     // const newInv = {
   //     //   ...inv,
@@ -60,7 +60,7 @@ function Consumer() {
   //     return setInv(newInv);
   //   }
   // }, 4000)
-  
+
   // function displayInventory () {
   //   let output = [];
   //   for (const sku in inv) {
@@ -70,12 +70,22 @@ function Consumer() {
   // }
   // const dispInv = displayInventory();
 
+  function restock(sku) {
+    console.log('restocking for sku: ', sku);
+    const newInv = {...inv};
+    newInv[sku] += 100;
+    setInv(newInv);
+  }
+
   return (
     <div>
       <div>
         {Object.keys(inv).map((key, idx) => {
           return (
-            <li key={idx}>{`${key}: ${inv[key]}`}</li>
+            <li className='inventory' key={idx}>
+              {`${key}: ${inv[key]}`}
+              <button onClick={() => restock(key)}>Restock</button>
+            </li>
           )
         })}
       </div>
