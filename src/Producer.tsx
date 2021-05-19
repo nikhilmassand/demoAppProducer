@@ -13,21 +13,24 @@ interface SaleOrder {
 
 function Producer() {
   const [sku, setSku] = useState('')
-  const [qty, setQty] = useState('0');
-  
+  const [qty, setQty] = useState('')
+  const [id, setId] = useState('') 
 
   function socketProducerInvoke() {
     console.log("the state of num is now...", qty);
     const socket = ioClient('http://localhost:3001');
 
     console.log('*** POST MESSAGE OBJECT:',{
+      id: String(id),
       SKU: sku,
       qty: String(qty),
     });
     const payload = {
+      id: String(id),
       SKU: sku,
-      qty: String(qty),
+      qty: Number(qty),
     };
+
     socket.emit('postMessage', payload)
     
     return () => {
@@ -55,8 +58,9 @@ function Producer() {
       <div className="produceData">
         {/* <form onSubmit = {handleSubmit}>
           <label> */}
+            <input type="text" className="idInput" placeholder='Enter Id' onChange={e => setId(e.target.value)} />
             <input type="text" className="skuInput" placeholder='Enter Sku' onChange={e => setSku(e.target.value)} />
-            <input type="number" className="qtyInput" placeholder='Enter Qty' onChange={e => setQty(e.target.value)} />
+            <input type="text" className="qtyInput" placeholder='Enter Qty' onChange={e => setQty(e.target.value)} />
           {/* </label>
         </form> */}
         <button className="produceDataButton" onClick={() => socketProducerInvoke()}>PRODUCE</button>

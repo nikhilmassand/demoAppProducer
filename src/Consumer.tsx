@@ -1,104 +1,105 @@
-import React, { useState, useEffect , useRef } from "react";
-import io from "socket.io-client";
-import AtomicKafkaClient from "./AtomicKafkaClient";
+// import React, { useState, useEffect , useRef } from "react";
+// import io from "socket.io-client";
+// import AtomicKafkaClient from "./AtomicKafkaClient";
 
-// const socket = io("http://localhost:3001");
+// // const socket = io("http://localhost:3001");
 
-interface Inventory {
-  [SKU: string]: number
-}
+// interface Inventory {
+//   [SKU: string]: number
+// }
 
-const inventory: Inventory = {
-  X01: 3000,
-  X02: 1700,
-  X03: 200,
-  X04: 9000,
-  X05: 2400,
-}
+// const inventory: Inventory = {
+//   X01: 3000,
+//   X02: 1700,
+//   X03: 200,
+//   X04: 9000,
+//   X05: 2400,
+// }
 
-function useInterval(callback, delay) {
-  const savedCallback = useRef(null);
+// function useInterval(callback, delay) {
+//   const savedCallback = useRef(null);
 
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
+//   // Remember the latest callback.
+//   useEffect(() => {
+//     savedCallback.current = callback;
+//   }, [callback]);
 
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback?.current()
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
+//   // Set up the interval.
+//   useEffect(() => {
+//     function tick() {
+//       savedCallback?.current()
+//     }
+//     if (delay !== null) {
+//       let id = setInterval(tick, delay);
+//       return () => clearInterval(id);
+//     }
+//   }, [delay]);
+// }
 
-function Consumer() {
-  const [inv, setInv] = useState(inventory);
-  const [sku, setSku] = useState([]);
-  const akc = new AtomicKafkaClient("http://localhost:3001");
+// function Consumer() {
+//   const [inv, setInv] = useState(inventory);
+//   const [skuArr, setSku] = useState([]);
+//   const akc = new AtomicKafkaClient("http://localhost:3001");
 
 
-  useInterval(() => akc.consumer(sku, setSku, inv, setInv), 4000);
-  // useInterval(() => {
-  //   if (sku.length > 0) {
-  //     const newInv = {...inv};
-  //     const latest = JSON.parse(sku[sku.length - 1]);
-  //     console.log('sku latest: ', latest);
-  //     // const newInv = inv[latest.SKU] - latest.qty;
+//   useInterval(() => akc.consumer(skuArr, setSku, inv, setInv), 4000);
+  
+//   // useInterval(() => {
+//   //   if (sku.length > 0) {
+//   //     const newInv = {...inv};
+//   //     const latest = JSON.parse(sku[sku.length - 1]);
+//   //     console.log('sku latest: ', latest);
+//   //     // const newInv = inv[latest.SKU] - latest.qty;
 
-  //     newInv[latest.SKU] -= latest.qty;
+//   //     newInv[latest.SKU] -= latest.qty;
 
-  //     // const skuUpdate = latest.SKU;
-  //     // const newInv = {
-  //     //   ...inv,
-  //     //   skuUpdate : inv[latest.SKU] - latest.qty,
-  //     // }
-  //     return setInv(newInv);
-  //   }
-  // }, 4000)
+//   //     // const skuUpdate = latest.SKU;
+//   //     // const newInv = {
+//   //     //   ...inv,
+//   //     //   skuUpdate : inv[latest.SKU] - latest.qty,
+//   //     // }
+//   //     return setInv(newInv);
+//   //   }
+//   // }, 4000)
 
-  // function displayInventory () {
-  //   let output = [];
-  //   for (const sku in inv) {
-  //     output.push(<li key={sku}>{`${sku}: ${inv[sku]}`}</li>);
-  //   }
-  //   return output;
-  // }
-  // const dispInv = displayInventory();
+//   // function displayInventory () {
+//   //   let output = [];
+//   //   for (const sku in inv) {
+//   //     output.push(<li key={sku}>{`${sku}: ${inv[sku]}`}</li>);
+//   //   }
+//   //   return output;
+//   // }
+//   // const dispInv = displayInventory();
+  
+//   function restock(sku) {
+//     console.log('restocking for sku: ', sku);
+//     const newInv = {...inv};
+//     newInv[sku] += 100;
+//     setInv(newInv);
+//   }
 
-  function restock(sku) {
-    console.log('restocking for sku: ', sku);
-    const newInv = {...inv};
-    newInv[sku] += 100;
-    setInv(newInv);
-  }
+//   return (
+//     <div>
+//       <div>
+//         {Object.keys(inv).map((key, idx) => {
+//           return (
+//             <li className='inventory' key={idx}>
+//               {`${key}: ${inv[key]}`}
+//               <button onClick={() => restock(key)}>Restock</button>
+//             </li>
+//           )
+//         })}
+//       </div>
+//       <h1>LIVE DATA:</h1>
+//       <ul>
+//         {skuArr.map((num, idx) => {
+//           return (
+//             <li key={idx}>{num}</li>
+//           )
+//         })}
+//       </ul>
+//     </div>
+//   );
+// }
 
-  return (
-    <div>
-      <div>
-        {Object.keys(inv).map((key, idx) => {
-          return (
-            <li className='inventory' key={idx}>
-              {`${key}: ${inv[key]}`}
-              <button onClick={() => restock(key)}>Restock</button>
-            </li>
-          )
-        })}
-      </div>
-      <h1>LIVE DATA:</h1>
-      <ul>
-        {sku.map((num, idx) => {
-          return (
-            <li key={idx}>{num}</li>
-          )
-        })}
-      </ul>
-    </div>
-  );
-}
-
-export default Consumer;
+// export default Consumer;
