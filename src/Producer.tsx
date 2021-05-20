@@ -64,7 +64,7 @@ function Producer() {
           {/* </label>
         </form> */}
         <button className="produceDataButton" onClick={() => socketProducerInvoke()}>PRODUCE</button>
-        <h2>I am responsive from Producer: {sku}</h2>
+        {/* <h2>I am responsive from Producer: {sku}</h2> */}
       </div>
     )
 }
