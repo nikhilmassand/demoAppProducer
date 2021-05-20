@@ -29,5 +29,5 @@ const atomicKafkaInstance = new AtomicKafka(server);
 // atomicKafkaInstance.newConsumer('truck-group');
 // atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
 console.log('instantiating producer in server')
-atomicKafkaInstance.newProducer('test_topic');
-atomicKafkaInstance.socketProduce('test_topic', 0);
+atomicKafkaInstance.newSubmitProducer('test_topic');
+atomicKafkaInstance.socketSubmitProduce('test_topic', 0);
