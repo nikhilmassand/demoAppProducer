@@ -31,6 +31,8 @@ const atomicKafkaInstance = new AtomicKafka(server);
 // atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
 console.log('instantiating producer on server side')
 atomicKafkaInstance.newProducer('test_topic');
+atomicKafkaInstance.globalProduce('postMessage', 'test_topic')
+
 
 const produceMyWay = () => {
   // select * from db
@@ -64,4 +66,4 @@ const produceMyWay = () => {
 		}, 5000)
 }
 
-produceMyWay();
+// produceMyWay();
