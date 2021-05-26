@@ -28,7 +28,7 @@ const server = app.listen(port, () => {
 
 const atomicKafkaInstance = new AtomicKafka(server);
 // atomicKafkaInstance.newConsumer('truck-group');
-// atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
+// atomicKafkaInstance.socketConsume('truck-group', 'test_topic', 'newMessage'); //add event here
 console.log('instantiating producer on server side')
 atomicKafkaInstance.newProducer('test_topic');
 atomicKafkaInstance.globalProduce('postMessage', 'test_topic')
