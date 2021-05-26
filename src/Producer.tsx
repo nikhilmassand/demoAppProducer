@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { render } from 'react-dom'
 import ioClient from 'socket.io-client'
+import AtomicKafkaClient from "./AtomicKafkaClient";
 
-
-// const socket = io("http://localhost:3001");
 
 interface SaleOrder {
   SKU: string,
@@ -15,6 +14,8 @@ function Producer() {
   const [sku, setSku] = useState('')
   const [qty, setQty] = useState('')
   const [id, setId] = useState('') 
+
+  const akc = new AtomicKafkaClient('http://localhost:3001')
 
   function socketProducerInvoke() {
     console.log("the state of num is now...", qty);
@@ -37,34 +38,14 @@ function Producer() {
         console.log("is Producer ever off?");
         socket.off();
     }
-    // io.on('connection', (socket) => {
-    //   socket.emit('postMessage', {
-    //     SKU: sku,
-    //     qty: String(qty)
-    //   })
-    //   return () => {
-    //     console.log("is Producer ever off?");
-    //     socket.off();
-    //   }
-    // })
 
   }
-  // const handleSubmit = (evt) => {
-  //   evt.preventDefault();
-  // }
-
-
     return (
       <div className="produceData">
-        {/* <form onSubmit = {handleSubmit}>
-          <label> */}
-            <input type="text" className="idInput" placeholder='Enter Id' onChange={e => setId(e.target.value)} />
-            <input type="text" className="skuInput" placeholder='Enter Sku' onChange={e => setSku(e.target.value)} />
-            <input type="text" className="qtyInput" placeholder='Enter Qty' onChange={e => setQty(e.target.value)} />
-          {/* </label>
-        </form> */}
+        <input type="text" className="idInput" placeholder='Enter Id' onChange={e => setId(e.target.value)} />
+        <input type="text" className="skuInput" placeholder='Enter Sku' onChange={e => setSku(e.target.value)} />
+        <input type="text" className="qtyInput" placeholder='Enter Qty' onChange={e => setQty(e.target.value)} />
         <button className="produceDataButton" onClick={() => socketProducerInvoke()}>PRODUCE</button>
-        {/* <h2>I am responsive from Producer: {sku}</h2> */}
       </div>
     )
 }

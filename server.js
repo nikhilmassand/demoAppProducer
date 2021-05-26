@@ -28,6 +28,6 @@ const server = app.listen(port, () => {
 const atomicKafkaInstance = new AtomicKafka(server);
 // atomicKafkaInstance.newConsumer('truck-group');
 // atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
-console.log('instantiating producer in server')
+console.log('instantiating producer on server side')
 atomicKafkaInstance.newSubmitProducer('test_topic');
 atomicKafkaInstance.socketSubmitProduce('test_topic', 0);
