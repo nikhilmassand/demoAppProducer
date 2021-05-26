@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require("path");
 const AtomicKafka = require('atomic-kafka')
+const fs = require('fs');
 
 const port = 3001;
 
@@ -29,5 +30,38 @@ const atomicKafkaInstance = new AtomicKafka(server);
 // atomicKafkaInstance.newConsumer('truck-group');
 // atomicKafkaInstance.socketConsume('truck-group', 'test_topic');
 console.log('instantiating producer on server side')
-atomicKafkaInstance.newSubmitProducer('test_topic');
-atomicKafkaInstance.socketSubmitProduce('test_topic', 0);
+atomicKafkaInstance.newProducer('test_topic');
+
+const produceMyWay = () => {
+  // select * from db
+  let data;
+  let toSend = [];
+  try {
+    data = fs.readFileSync('salesData.json', 'UTF-8');
+    const lines = data.split(/\r?\n/);
+    // lines.pop();
+    lines.forEach((line) => {
+      toSend.push(line);
+    })
+  }
+  catch (err){
+    console.error(err);
+  }
+  let i = 0;
+  const interval = setInterval(async () => {
+			console.log('i: ', i)
+			if(i > toSend.length - 1) {
+				i = 0;
+			}
+			try {
+				console.log('executing send with: ', toSend[i]);
+        atomicKafkaInstance.socketProduce(toSend[i],'test_topic');
+				i++;
+			}
+			catch (err) {
+				console.log('Error with producing in produce(): ', err);
+			}
+		}, 5000)
+}
+
+produceMyWay();
