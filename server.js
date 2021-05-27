@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require("path");
-const AtomicKafka = require('atomic-kafka')
+const AtomicKafkaServer = require('atomic-kafka/server')
 const fs = require('fs');
 
 const port = 3001;
@@ -26,7 +26,8 @@ const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-const atomicKafkaInstance = new AtomicKafka(server);
+const atomicKafkaInstance = new AtomicKafkaServer(server);
+// console.log(atomicKafkaInstance)
 // atomicKafkaInstance.newConsumer('truck-group');
 // atomicKafkaInstance.socketConsume('truck-group', 'test_topic', 'newMessage'); //add event here
 console.log('instantiating producer on server side')

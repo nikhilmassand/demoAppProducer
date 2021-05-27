@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { render } from 'react-dom'
 import ioClient from 'socket.io-client'
-import AtomicKafkaClient from "./AtomicKafkaClient";
-
+// import { AtomicKafkaClient } from "atomic-kafka/";
+declare function require(name:string)
+const AtomicKafkaClient = require('atomic-kafka/client').default
 
 interface SaleOrder {
   SKU: string,
@@ -11,6 +12,8 @@ interface SaleOrder {
 
 
 function Producer() {
+  // const AKC = require('atomic-kafka/client')
+  // console.log(AtomicKafkaClient)
   const [sku, setSku] = useState('')
   const [qty, setQty] = useState('')
   const [id, setId] = useState('') 
