@@ -58,7 +58,7 @@ const produceMyWay = () => {
 			}
 			try {
 				console.log('executing send with: ', toSend[i]);
-        atomicKafkaInstance.socketProduce(toSend[i],'test_topic');
+        atomicKafkaInstance.localProduce(toSend[i],'test_topic');
 				i++;
 			}
 			catch (err) {
